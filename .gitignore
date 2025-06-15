@@ -1,0 +1,35 @@
+# .gitignore for Universal Project Manager
+# This file is actively maintained and updated as the project evolves.
+# Please ensure commits have clear messages with dates/times for easier tracking.
+
+# Node dependencies
+/node_modules/
+
+# Build output
+/dist/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Vite cache
+/.vite/
+
+# Misc
+*.tgz
