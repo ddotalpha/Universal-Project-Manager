@@ -15,9 +15,11 @@ export default function IdeaSection({ ideas, onSelectIdea }) {
           <img
             src={idea.drawing}
             alt={idea.name}
-            style={{ width: "100%", height: 100, objectFit: "cover", borderRadius: 4 }}
+            style={imageStyle}
           />
-          <small style={{ display: "block", marginTop: 5, textAlign: "center" }}>{idea.name}</small>
+          <div style={detailsStyle}>
+            <small>{idea.name}</small>
+          </div>
         </div>
       ))}
     </div>
@@ -30,6 +32,7 @@ const sidebarStyle = {
   padding: 10,
   overflowY: "auto",
   height: "calc(100vh - 50px)",
+  background: '#f7f7f7'
 };
 
 const ideaBoxStyle = {
@@ -37,7 +40,20 @@ const ideaBoxStyle = {
   marginBottom: 15,
   border: "1px solid #ccc",
   borderRadius: 6,
-  padding: 5,
-  backgroundColor: "#fafafa",
-  boxShadow: "0 0 4px rgba(0,0,0,0.1)",
+  backgroundColor: "#fff",
+  boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+  overflow: 'hidden'
+};
+
+const imageStyle = {
+  display: 'block',
+  width: "100%",
+  height: 100,
+  objectFit: "cover",
+  background: '#f0f0f0'
+};
+
+const detailsStyle = {
+  padding: '8px',
+  textAlign: 'center'
 };

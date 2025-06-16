@@ -9,6 +9,7 @@ export default function App() {
   const [ideas, setIdeas] = useState([]);
   const [showAddIdea, setShowAddIdea] = useState(false);
   const [selectedIdea, setSelectedIdea] = useState(null);
+  const [ideaToEdit, setIdeaToEdit] = useState(null);
 
   const addProject = () => {
     const name = prompt("Enter new project name:");
@@ -17,10 +18,30 @@ export default function App() {
     }
   };
 
-  // This function saves the idea AND closes the modal.
-  const saveIdea = (idea) => {
-    setIdeas([...ideas, { ...idea, id: Date.now() }]);
+  const handleEditIdea = (idea) => {
+    setIdeaToEdit(idea);
+    setShowAddIdea(true);
+  };
+
+  // ✅ NEW function to handle switching from the view modal to the edit modal
+  const handleSwitchToEdit = (idea) => {
+    setSelectedIdea(null); // First, close the view modal
+    handleEditIdea(idea);   // Then, open the edit modal with the idea's data
+  };
+
+  const saveIdea = (ideaData) => {
+    if (ideaData.id) {
+      setIdeas(ideas.map(i => i.id === ideaData.id ? ideaData : i));
+    } else {
+      setIdeas([...ideas, { ...ideaData, id: Date.now() }]);
+    }
     setShowAddIdea(false);
+    setIdeaToEdit(null);
+  };
+
+  const handleCloseModal = () => {
+    setShowAddIdea(false);
+    setIdeaToEdit(null);
   };
 
   return (
@@ -42,10 +63,22 @@ export default function App() {
         <IdeaSection ideas={ideas} onSelectIdea={setSelectedIdea} />
       </div>
 
-      {/* Ensure this line passes onSave={saveIdea} */}
-      {showAddIdea && <AddIdeaModal onClose={() => setShowAddIdea(false)} onSave={saveIdea} />}
+      {showAddIdea && (
+        <AddIdeaModal
+          onClose={handleCloseModal}
+          onSave={saveIdea}
+          existingIdea={ideaToEdit}
+        />
+      )}
 
-      {selectedIdea && <IdeaModal idea={selectedIdea} onClose={() => setSelectedIdea(null)} />}
+      {/* ✅ Pass the new onEdit function to the IdeaModal */}
+      {selectedIdea && (
+        <IdeaModal
+          idea={selectedIdea}
+          onClose={() => setSelectedIdea(null)}
+          onEdit={handleSwitchToEdit}
+        />
+      )}
     </div>
   );
 }

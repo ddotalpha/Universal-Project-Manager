@@ -1,0 +1,3 @@
+npm run tauri
+
+npm run dev
