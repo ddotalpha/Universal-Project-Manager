@@ -1,4 +1,5 @@
-@import url('./Calendar.css'); /* ✅ NEW: Import calendar styles */
+@import url('./Calendar.css');
+@import url('./LifeLine.css'); /* ✅ NEW: Import LifeLine styles */
 
 body {
   margin: 0;

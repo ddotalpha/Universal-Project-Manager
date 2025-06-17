@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faListCheck,
   faCalendarDays,
   faLightbulb,
   faFolderPlus,
-  faProjectDiagram // ✅ NEW: Import new icon
+  faProjectDiagram,
+  faWaveSquare, // ✅ NEW: Icon for LifeLine
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function TopBar({ onNewProject, onAddIdeaClick, setCurrentView }) { // ✅ NEW: Receive setCurrentView prop
+export default function TopBar({ onNewProject, onAddIdeaClick, setCurrentView }) {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -32,7 +32,11 @@ export default function TopBar({ onNewProject, onAddIdeaClick, setCurrentView })
 
       {/* Center Section: View Switcher Buttons */}
       <div style={sectionStyle}>
-        {/* ✅ NEW: Buttons now switch the main view */}
+        {/* ✅ NEW: LifeLine button added */}
+        <button onClick={() => setCurrentView('lifeLine')} style={buttonStyle}>
+          <FontAwesomeIcon icon={faWaveSquare} />
+          <span>LifeLine</span>
+        </button>
         <button onClick={() => setCurrentView('calendar')} style={buttonStyle}>
           <FontAwesomeIcon icon={faCalendarDays} />
           <span>Calendar</span>
@@ -76,7 +80,7 @@ const sectionStyle = {
 const buttonStyle = {
   display: 'flex',
   alignItems: 'center',
-  gap: '8px', // Space between icon and text
+  gap: '8px',
   padding: "6px 12px",
   cursor: "pointer",
   backgroundColor: 'transparent',
@@ -84,6 +88,6 @@ const buttonStyle = {
   border: '1px solid rgba(255, 255, 255, 0.6)',
   borderRadius: 4,
   fontWeight: "bold",
-  fontFamily: 'inherit', // Ensure font is consistent
+  fontFamily: 'inherit',
   fontSize: '14px'
 };

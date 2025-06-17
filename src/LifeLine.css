@@ -1,0 +1,182 @@
+/* Main container for the LifeLine feature */
+.lifeline-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  color: #eee;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* ✅ REMOVED: add-event-form styles are no longer needed */
+
+/* Wrapper for the timeline chart */
+.timeline-wrapper {
+  flex-grow: 1;
+  display: flex;
+  overflow: hidden;
+}
+.timeline-y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 15px;
+    font-size: 12px;
+    color: #777;
+    text-align: right;
+}
+
+/* Scroll container */
+.timeline-scroll-container {
+    flex-grow: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 20px;
+}
+
+/* The main content area */
+.timeline-content {
+  position: relative;
+  min-width: 2000px;
+  height: 100%;
+  background: #333;
+  border-left: 1px solid #555;
+  cursor: cell; /* Indicate that the area is interactive */
+}
+
+/* SVG for the zig-zag line */
+.timeline-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none; /* Make sure SVG doesn't block double clicks on the parent */
+}
+.timeline-path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* Event dot */
+.timeline-event {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  cursor: grab;
+}
+.timeline-event.dragging {
+  cursor: grabbing;
+  z-index: 10;
+}
+
+.event-dot {
+  width: 12px;
+  height: 12px;
+  background-color: #007bff;
+  border-radius: 50%;
+  border: 2px solid #333;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
+}
+.timeline-event.dragging .event-dot {
+  transform: scale(1.2);
+}
+
+.event-label {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #eee;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* X-axis with year and month markers */
+.timeline-x-axis {
+    position: absolute;
+    bottom: -5px;
+    width: 100%;
+    height: 20px;
+}
+.year-marker {
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: #ccc;
+}
+/* ✅ NEW: Style for month markers */
+.month-marker {
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #888;
+}
+
+/* ✅ NEW: Styles for the add event popup */
+.add-event-popup {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    z-index: 20;
+    border: 1px solid #666;
+}
+.add-event-popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+.add-event-popup .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 20px;
+    cursor: pointer;
+}
+.add-event-popup h4 {
+    margin: 0 0 5px 0;
+    color: #fff;
+}
+.add-event-popup .popup-date-display {
+    margin: 0 0 10px 0;
+    font-size: 12px;
+    color: #ccc;
+}
+.add-event-popup input[type="text"] {
+    background-color: #555;
+    border: 1px solid #777;
+    color: #eee;
+    padding: 8px 12px;
+    border-radius: 4px;
+    width: 200px;
+}
+.add-event-popup .save-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
