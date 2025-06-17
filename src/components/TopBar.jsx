@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-  faListCheck, 
-  faCalendarDays, 
-  faLightbulb, 
-  faFolderPlus 
+import {
+  faListCheck,
+  faCalendarDays,
+  faLightbulb,
+  faFolderPlus,
+  faProjectDiagram // ✅ NEW: Import new icon
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function TopBar({ onNewProject, onAddIdeaClick }) {
+export default function TopBar({ onNewProject, onAddIdeaClick, setCurrentView }) { // ✅ NEW: Receive setCurrentView prop
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
-
-  const handleFeatureClick = (featureName) => {
-    alert(`${featureName} feature is coming soon!`);
-  };
 
   return (
     <div style={barStyle}>
@@ -35,13 +32,14 @@ export default function TopBar({ onNewProject, onAddIdeaClick }) {
 
       {/* Center Section: View Switcher Buttons */}
       <div style={sectionStyle}>
-        <button onClick={() => handleFeatureClick('To-Do List')} style={buttonStyle}>
-          <FontAwesomeIcon icon={faListCheck} />
-          <span>To-Do List</span>
-        </button>
-        <button onClick={() => handleFeatureClick('Calendar')} style={buttonStyle}>
+        {/* ✅ NEW: Buttons now switch the main view */}
+        <button onClick={() => setCurrentView('calendar')} style={buttonStyle}>
           <FontAwesomeIcon icon={faCalendarDays} />
           <span>Calendar</span>
+        </button>
+        <button onClick={() => setCurrentView('projects')} style={buttonStyle}>
+          <FontAwesomeIcon icon={faProjectDiagram} />
+          <span>Projects</span>
         </button>
       </div>
 
@@ -75,7 +73,6 @@ const sectionStyle = {
   gap: '15px'
 };
 
-// ✅ A single, unified style for all buttons
 const buttonStyle = {
   display: 'flex',
   alignItems: 'center',

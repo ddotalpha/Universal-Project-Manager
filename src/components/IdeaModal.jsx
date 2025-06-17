@@ -1,28 +1,55 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 export default function IdeaModal({ idea, onClose, onEdit }) {
+  const imageRef = useRef(null);
+  const [scale, setScale] = useState(1);
+
+  // ✅ NEW: Effect to calculate the scaling factor
+  useEffect(() => {
+    if (imageRef.current && idea.originalWidth) {
+      const handleLoad = () => {
+        const newWidth = imageRef.current.offsetWidth;
+        setScale(newWidth / idea.originalWidth);
+      };
+
+      // The image might already be loaded by the browser
+      if (imageRef.current.complete) {
+        handleLoad();
+      } else {
+        imageRef.current.addEventListener('load', handleLoad);
+      }
+
+      return () => {
+        if (imageRef.current) {
+          imageRef.current.removeEventListener('load', handleLoad);
+        }
+      };
+    }
+  }, [idea, imageRef]);
+
+
   if (!idea) return null;
 
   return (
     <div style={modalStyle}>
       <h2>{idea.name}</h2>
 
-      {/* ✅ This container will hold both the image and the text overlays */}
       <div style={contentContainerStyle}>
-        {/* The background drawing */}
-        <img src={idea.drawing} alt={idea.name} style={imageStyle} />
+        {/* ✅ NEW: Add ref to the image */}
+        <img ref={imageRef} src={idea.drawing} alt={idea.name} style={imageStyle} />
 
-        {/* ✅ We map over the idea's textboxes and display each one */}
+        {/* ✅ NEW: Apply the calculated scale to the textbox positions */}
         {idea.textboxes && idea.textboxes.map(textbox => (
           <div
             key={textbox.id}
             style={{
               ...textBoxOverlayStyle,
-              top: `${textbox.y}px`,
-              left: `${textbox.x}px`,
+              top: `${textbox.y * scale}px`,
+              left: `${textbox.x * scale}px`,
+              // Also scale the font size for better appearance
+              fontSize: `${14 * scale}px`,
             }}
           >
-            {/* Using pre-wrap to respect newlines and formatting */}
             <p style={{ margin: 0 }}>{textbox.text}</p>
           </div>
         ))}
@@ -54,27 +81,26 @@ const modalStyle = {
 };
 
 const contentContainerStyle = {
-  position: 'relative', // This is crucial for positioning the textboxes
+  position: 'relative',
   width: '100%',
   border: '1px solid #ccc'
 };
 
 const imageStyle = {
   width: "100%",
-  display: 'block' // Prevents extra space below the image
+  display: 'block'
 };
 
 const textBoxOverlayStyle = {
-  position: 'absolute', // Positioned relative to the container
-  background: 'rgba(255, 255, 224, 0.9)', // Semi-transparent yellow, like a sticky note
+  position: 'absolute',
+  background: 'rgba(255, 255, 224, 0.9)',
   border: '1px solid #aaa',
   padding: '2px 4px',
-  fontSize: '14px',
   minWidth: "80px",
   minHeight: "30px",
-  pointerEvents: 'none', // Makes the text non-interactive
-  whiteSpace: 'pre-wrap',   // Respects newlines from the textarea
-  wordWrap: 'break-word', // Ensures long words don't overflow
+  pointerEvents: 'none',
+  whiteSpace: 'pre-wrap',
+  wordWrap: 'break-word',
 };
 
 const buttonContainerStyle = {

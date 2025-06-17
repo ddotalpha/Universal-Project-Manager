@@ -95,11 +95,14 @@ export default function AddIdeaModal({ onClose, onSave, existingIdea = null }) {
 
   const save = () => {
     const canvasData = canvasRef.current.toDataURL("image/png");
+    // ✅ NEW: Save the canvas's dimensions along with the idea data.
     const ideaPayload = {
       name,
       drawing: canvasData,
       textboxes,
-      id: existingIdea ? existingIdea.id : undefined, // Pass back ID if editing
+      id: existingIdea ? existingIdea.id : undefined,
+      originalWidth: canvasRef.current.width,
+      originalHeight: canvasRef.current.height,
     };
     onSave(ideaPayload);
   };
@@ -129,7 +132,7 @@ export default function AddIdeaModal({ onClose, onSave, existingIdea = null }) {
       <div
         ref={containerRef}
         onClick={handleCanvasClick}
-        onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right-click
+        onContextMenu={(e) => e.preventDefault()}
         style={{ flex: 1, position: "relative", background: "#f0f0f0" }}
       >
         <canvas

@@ -1,0 +1,161 @@
+/* Main Calendar Container */
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+/* Calendar Header */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 2px solid #e0e0e0;
+  background-color: #f9f9f9;
+  flex-shrink: 0;
+}
+
+.calendar-header .navigation {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.calendar-header .mode-switcher {
+  display: flex;
+  gap: 5px;
+}
+
+.calendar-header button {
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.calendar-header button.active {
+  background-color: #2a9d8f;
+  color: white;
+  border-color: #248a7f;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: 1.4em;
+  color: #333;
+}
+
+/* Common Grid Styles */
+.calendar-grid {
+  flex-grow: 1;
+  overflow-y: auto;
+  display: grid;
+}
+
+/* Month View */
+.calendar-grid {
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: auto 1fr 1fr 1fr 1fr 1fr 1fr; /* Header row + 6 weeks */
+    border-left: 1px solid #e0e0e0;
+}
+
+.day-header, .day-cell {
+  padding: 8px;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.day-header {
+  font-weight: bold;
+  text-align: center;
+  background-color: #f7f7f7;
+  padding: 10px 0;
+}
+
+.day-cell {
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
+}
+
+.day-cell .day-number {
+  font-weight: bold;
+}
+
+.day-cell.other-month {
+  color: #aaa;
+  background-color: #fafafa;
+}
+
+/* Week & Day Timetable */
+.timetable {
+  display: flex;
+  height: 100%;
+}
+
+.time-column {
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
+  border-right: 2px solid #e0e0e0;
+  text-align: right;
+  padding-top: 45px; /* Offset for header */
+}
+
+.time-slot {
+  flex-basis: 60px; /* 1 hour slot */
+  font-size: 12px;
+  color: #777;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.time-slot:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10px;
+  right: 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.days-column-container {
+  display: grid;
+  flex-grow: 1;
+}
+
+.day-column {
+  border-right: 1px solid #e0e0e0;
+  position: relative;
+}
+
+.day-column-header {
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 2px solid #e0e0e0;
+    font-weight: bold;
+    background-color: #f7f7f7;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.day-column-body {
+    position: relative;
+}
+
+.hour-line {
+    height: 59px; /* 60px - 1px border */
+    border-bottom: 1px dotted #ccc;
+}
+.hour-line:last-child {
+    border-bottom: none;
+}
